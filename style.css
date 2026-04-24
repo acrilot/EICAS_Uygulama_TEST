@@ -1,0 +1,576 @@
+/* ==========================================================================
+   Temel Stiller
+   ========================================================================== */
+
+@font-face {
+    font-family: 'EICAS-Font';
+    src: url('../Fonts/OCRBPro.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #0f1318;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 12px;
+    margin: 0;
+    padding: 12px;
+    height: 100vh;
+    box-sizing: border-box;
+    font-family: 'EICAS-Font', monospace;
+    /* font-family: 'Courier New', monospace; */
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Ölçeklendirme & Zoom Desteği
+   ========================================================================== */
+
+.control-panel {
+    zoom: 1.4;
+}
+
+@supports not (zoom: 1) {
+    .control-panel {
+        zoom: unset;
+        transform: scale(1.4);
+        transform-origin: top left;
+    }
+
+    .engine-panel {
+        margin-right: calc(0.4 * (390px));
+        margin-bottom: calc(0.4 * 100%);
+    }
+
+    .mode-panel {
+        margin-right: calc(0.4 * (230px));
+        margin-bottom: calc(0.4 * 100%);
+    }
+}
+
+/* ==========================================================================
+   Ekran Kapsayıcısı & SVG Ölçeklendirme
+   ========================================================================== */
+
+.eicas-display {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #000;
+    border: 2px solid #333;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.eicas-display svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* ==========================================================================
+   Kontrol Panelleri
+   ========================================================================== */
+
+:root {
+    --panel-bg: #161c22;
+    --panel-border: #252e38;
+    --section-border: rgba(0, 229, 255, 0.08);
+    --accent: #00e5ff;
+    --accent-dim: rgba(0, 229, 255, 0.5);
+    --accent-glow: rgba(0, 229, 255, 0.12);
+    --text: #c8d6e0;
+    --text-dim: #6b7f8f;
+    --btn-bg: #1c252f;
+    --btn-border: #2e3d4d;
+    --btn-hover-bg: #243040;
+    --btn-hover-border: #00e5ff;
+    --danger: #ff4444;
+    --warn: #ffb300;
+    --input-bg: #0e1419;
+}
+
+.control-panel {
+    font-family: 'EICAS-Font', monospace !important;
+    background-color: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    color: var(--text);
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+.control-panel * {
+    font-family: inherit;
+}
+
+.engine-panel {
+    flex: 1.3;
+    max-width: 278px;
+    min-width: 228px;
+    padding: 9px 10px;
+    gap: 7px;
+}
+
+.mode-panel {
+    flex: 0.75;
+    max-width: 190px;
+    min-width: 170px;
+    padding: 9px;
+    gap: 7px;
+}
+
+/* ==========================================================================
+   Kontrol Paneli Grupları & Başlık Stilleri
+   ========================================================================== */
+
+.control-group {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--section-border);
+    margin-bottom: 0;
+}
+
+.control-group.borderless {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.control-group h3 {
+    margin: 0 0 8px 0;
+    color: var(--accent-dim);
+    font-size: 9px;
+    font-weight: normal;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.control-group h3::before,
+.control-group h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--section-border));
+}
+
+.control-group h3::after {
+    background: linear-gradient(to left, transparent, var(--section-border));
+}
+
+/* ==========================================================================
+   Motor Kontrolleri Düzeni
+   ========================================================================== */
+
+.engine-controls {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 10px;
+}
+
+/* Buton sütunları flex ile büyüsün — slider group da aynı yüksekliğe gerilir */
+.engine-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 4px;
+    flex: 0 0 auto;
+}
+
+.slider-group {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    padding: 4px 0;
+    flex: 1;
+    /* Slider container'lar tam yüksekliği kaplasın */
+    align-items: stretch;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    justify-content: space-between;
+}
+
+/* Slider yüksekliği buton sütununun yüksekliğine eşit olacak şekilde esnet */
+.slider-vertical {
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    width: 18px;
+    flex: 1;
+    min-height: 80px;
+    max-height: 180px;
+    margin: 0;
+    accent-color: var(--accent);
+}
+
+.vertical-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.vertical-layout-tight {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.horizontal-setting {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.setting-label {
+    width: 44px;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.multiplier-label {
+    width: 62px;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.flex-slider {
+    flex-grow: 1;
+    margin: 0;
+}
+
+/* ==========================================================================
+   Butonlar
+   ========================================================================== */
+
+button {
+    background-color: var(--btn-bg);
+    color: var(--text);
+    border: 1px solid var(--btn-border);
+    padding: 5px 4px;
+    cursor: pointer;
+    width: 76px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    text-align: center !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    position: relative;
+}
+
+button:hover {
+    background-color: var(--btn-hover-bg);
+    border-color: var(--btn-hover-border);
+    color: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+.flight-modes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.flight-modes-grid button {
+    width: 100%;
+    padding: 8px 2px;
+    font-size: 10px;
+    margin: 0;
+    letter-spacing: 0.8px;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.mode-panel .control-group > button,
+.mode-panel .control-group div > button {
+    width: 100%;
+}
+
+.clear-mode-btn {
+    margin-top: 8px;
+    width: 100%;
+    border-color: rgba(255,68,68,0.3);
+    color: #cc5555;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+.clear-mode-btn:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+    background-color: rgba(255,68,68,0.08);
+    box-shadow: 0 0 8px rgba(255,68,68,0.15);
+}
+
+/* ==========================================================================
+   Birim Değiştirme Butonu Animasyonu
+   ========================================================================== */
+
+.unit-toggle-widget {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--input-bg);
+    border: 1px solid var(--btn-border);
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: hidden;
+    width: 50%;
+    height: 22px;
+    flex-shrink: 0;
+    transition: border-color 0.15s;
+    user-select: none;
+}
+
+.unit-toggle-widget:hover {
+    border-color: var(--accent-dim);
+}
+
+.unit-toggle-small {
+    width: 36px;
+    flex-shrink: 0;
+}
+
+.unit-toggle-track {
+    display: flex;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.unit-opt {
+    flex: 1;
+    text-align: center;
+    font-size: 9px;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+    line-height: 22px;
+    color: var(--text-dim);
+    transition: color 0.25s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.unit-opt.active {
+    color: #000;
+    font-weight: bold;
+}
+
+/* Kayan aktif gösterge */
+.unit-toggle-slider {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    width: calc(50% - 1px);
+    background-color: var(--accent);
+    border-radius: 2px;
+    z-index: 1;
+    left: 1px;
+    transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sağa kaymış hal */
+.unit-toggle-slider.right {
+    left: calc(50%);
+}
+
+/* ==========================================================================
+   Flight Scenarios — Glow & Stop Button
+   ========================================================================== */
+
+.scenario-group {
+    border-radius: 5px;
+    padding: 8px 6px 10px;
+    transition: box-shadow 0.4s ease, border-color 0.4s ease;
+    border: 1px solid transparent;
+}
+
+.scenario-group.scenario-active {
+    border-color: rgba(0, 229, 255, 0.35);
+    box-shadow:
+        0 0 10px rgba(0, 229, 255, 0.2),
+        0 0 24px rgba(0, 229, 255, 0.12),
+        inset 0 0 8px rgba(0, 229, 255, 0.05);
+    animation: scenario-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes scenario-pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(0,229,255,0.2), 0 0 24px rgba(0,229,255,0.12), inset 0 0 8px rgba(0,229,255,0.05); }
+    50%       { box-shadow: 0 0 16px rgba(0,229,255,0.35), 0 0 36px rgba(0,229,255,0.2), inset 0 0 12px rgba(0,229,255,0.08); }
+}
+
+.scenario-group .vertical-layout-tight button {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    font-size: 9.5px;
+    letter-spacing: 0.3px;
+}
+
+#stop_scenario_btn {
+    background-color: rgba(122, 40, 40, 0.6);
+    color: #ff8080;
+    border-color: rgba(255, 68, 68, 0.5);
+    letter-spacing: 1px;
+    font-size: 9px;
+    margin-bottom: 2px;
+}
+
+#stop_scenario_btn:hover {
+    background-color: rgba(180, 40, 40, 0.8);
+    border-color: var(--danger);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+}
+
+/* ==========================================================================
+   Inputs & Sliders
+   ========================================================================== */
+
+.input-value {
+    background-color: var(--input-bg);
+    color: var(--accent);
+    border: 1px solid var(--btn-border);
+    border-radius: 3px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    padding: 3px 2px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.input-value:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 6px var(--accent-glow);
+}
+
+.input-horizontal {
+    width: 40px;
+    flex-shrink: 0;
+}
+
+.input-vertical {
+    width: 36px;
+    margin-top: 2px;
+}
+
+input[type=range] {
+    width: 100%;
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--accent);
+}
+
+/* slider-vertical tanımı yukarıda engine-controls bölümünde */
+
+/* ==========================================================================
+   EICAS Alerts & Animations
+   ========================================================================== */
+
+@keyframes eicas-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.eicas-blink-black,
+.eicas-blink-black * {
+    fill: #000000 !important;
+    color: #000000 !important;
+    animation: eicas-blink 0.5s infinite;
+}
+
+.eicas-steady-black,
+.eicas-steady-black * {
+    fill: #000000 !important;
+    color: #000000 !important;
+}
+
+.eicas-blink-amber,
+.eicas-blink-amber * {
+    fill: #ffcd59 !important;
+    color: #ffcd59 !important;
+    animation: eicas-blink 0.5s infinite;
+}
+
+.eicas-steady-amber,
+.eicas-text-amber,
+.eicas-text-amber * {
+    fill: #ffcd59 !important;
+    color: #ffcd59 !important;
+}
+
+.eicas-text-red,
+.eicas-text-red * {
+    fill: #ff0000 !important;
+    color: #ff0000 !important;
+}
+
+.eicas-needle-amber {
+    stroke: #ffb300 !important;
+}
+
+.eicas-needle-red {
+    stroke: #ff0000 !important;
+}
+
+.vib-inverted {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    fill: #000000 !important;
+    border: 1px solid #ffffff;
+    border-radius: 2px;
+}
+
+/* ==========================================================================
+   Hide Static Text for Unit Converion
+   ========================================================================== */
+#lb_text {
+    display: none !important;
+}
+
+/* ==========================================================================
+   SVG Specific Transforms & Initial Visibility
+   ========================================================================== */
+
+#mode_r_to, #mode_r_crz, #mode_to, #mode_clb, #mode_crz, #mode_ga, #mode_con, #mode_---, #mode_at_lim,
+#lop_bg, #lop_text, #svo_bg, #svo_text, #ofb_bg, #ofb_text, #thrust_bg, #thrust_text, #low_fuel_bg, #low_fuel_text,
+#lop_bg2, #lop_text2, #svo_bg2, #svo_text2, #ofb_bg2, #ofb_text2, #thrust_bg2, #thrust_text2, #low_fuel_bg2, #low_fuel_text2,
+#rev_text_left, #rev_text_right, #eng_fail_text_l, #eng_fail_text_r, #crossbleed_text, #low_text {
+    display: none; 
+}
+
+#n1_needle_l, #n1_needle_r,    
+#egt_left_needle, #egt_right_needle,
+#n1_ref_bug_l, #n1_ref_bug_r {
+    transform-box: fill-box; 
+    transform-origin: 0% 50%; 
+}
+
+#fuel_arc_1, #fuel_arc_2, #fuel_arc_ctr {
+    transition: stroke-dashoffset 1s linear;
+}
