@@ -30,6 +30,8 @@ body {
 
 .control-panel {
     zoom: 1.4;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto; 
 }
 
 @media screen and (max-width: 900px) {
