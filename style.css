@@ -32,6 +32,30 @@ body {
     zoom: 1.4;
 }
 
+@media screen and (max-width: 900px) {
+    body {
+        overflow: auto; /* Mobilde genel sayfa kaydırmasını aktif hale getirir */
+        height: auto;
+        min-height: 100vh;
+        align-items: flex-start; /* Elemanların tepeden hizalanmasını sağlar */
+    }
+
+    .control-panel {
+        zoom: 1 !important; /* Mobilde aşırı büyütmeyi iptal eder */
+        max-height: none; 
+        overflow-y: visible;
+    }
+
+    /* Zoom desteklemeyen tarayıcılar (Firefox vb.) için fallback düzeltmesi */
+    @supports not (zoom: 1) {
+        .control-panel {
+            transform: scale(1) !important;
+            margin-right: 0 !important;
+            margin-bottom: 0 !important;
+        }
+    }
+}
+
 @supports not (zoom: 1) {
     .control-panel {
         zoom: unset;
