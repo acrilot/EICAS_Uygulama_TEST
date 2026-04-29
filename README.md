@@ -2,8 +2,12 @@
 
 Bu uygulama, Boeing 737-600 ve Boeing 737-700 modellerinde kullanılan EICAS Primary Parameters Display baz alınarak yapılmıştır.
 
+---
+
 ## Kurulum ve Çalıştırma
 Uygulama web tabanlı olması dolayısıyla herhangi bir derleme aracı veya sunucu tarafı bir dil gerektirmez. Projeyi bilgisayarınıza indirdikten veya klonladıktan sonra `index.html` dosyasını modern bir web tarayıcısında (Firefox, Chrome, Safari, Edge vb.) açmanız yeterlidir.
+
+---
 
 ## Kullanım
 Uygulama çalıştırıldığında kullanıcıyı ekranın solunda orijinal göstergenin birebir uyarlaması ve ekranın sağında ise bu göstergeyi kontrol etmek için kullanılacak kontrol paneli karşılamaktadır. Soldaki göstergede gösterilecek değerler sağdaki kontrol paneline bağlıdır.
@@ -72,6 +76,8 @@ JS kodunda yazılarak belirlenmiş bir senaryoya göre motor devri, uçuş modu 
 **Normal Kalkış:** Motorların rölantiden stabilizasyon aşamasına, ardından TO modu ile maksimum kalkış gücüne ve sonrasında CLB modu ile tırmanma itkisine geçişini sırasıyla oynatan standart kalkış prosedürüdür.
 
 **Motor Arızası:** Normal kalkış esnasında kritik bir hızda (V1) sağ motorda aniden ENG FAIL tetikleyen ve ardından uçağın uçuşa devam edebilmesi için sağlam kalan sol motoru CON moduna alan acil durum kalkış senaryosudur.
+
+---
 
 ## Geliştirme Aşaması
 
