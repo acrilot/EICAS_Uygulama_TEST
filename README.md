@@ -6,6 +6,9 @@ Bu uygulama, Boeing 737-600 ve Boeing 737-700 modellerinde kullanılan EICAS Pri
 
 ## Kurulum ve Çalıştırma
 Uygulama web tabanlı olması dolayısıyla herhangi bir derleme aracı veya sunucu tarafı bir dil gerektirmez. Projeyi bilgisayarınıza indirdikten veya klonladıktan sonra `index.html` dosyasını modern bir web tarayıcısında (Firefox, Chrome, Safari, Edge vb.) açmanız yeterlidir.
+Aynı zamanda https://acrilot.github.io/EICAS_Uygulama/ linkini kullanarak doğrudan deneyimlemeniz de mümkündür.
+
+<img width="1920" height="1080" alt="Uygulama Ekran Görüntüsü" src="https://github.com/user-attachments/assets/2d04290a-c6d6-44ba-989f-4bd2b5e95883" />
 
 ---
 
@@ -91,7 +94,10 @@ Ayıklanan bu SVG uzantılı dosyalar üzerindeki işlemler Inkscape isimli vekt
 
 Sayfalardaki yazılar, ok işaretleri, sayfa numaraları ve diğer gereksiz öğeler silinerek yalnızca istenen gösterge çizimleri bırakılmıştır. Bu çizimler tek parça halinde yollar ve düğümler şeklinde olmayıp, onlarca farklı yol ve düğümün birleşiminden oluştuğu için öylece kullanılabilir durumda değildir. 
 
-Öncelikle çizimler bir maske katmanı haline getirilmiştir. Ardından bunun üzerine eklenen boş bir katman üzerinde manuel olarak temiz ve tek parça görüntüler halinde yeniden çizilmiştir. Göstergede kontrolü sağlanacak tüm gruplar ve yollara birer ID atanmıştır. 
+Öncelikle çizimler bir maske katmanı haline getirilmiştir. Ardından bunun üzerine eklenen boş bir katman üzerinde manuel olarak temiz ve tek parça görüntüler halinde yeniden çizilmiştir. Göstergede kontrolü sağlanacak tüm gruplar ve yollara birer ID atanmıştır.
+
+<img width="1920" height="1030" alt="Maske Üzerine Çizim" src="https://github.com/user-attachments/assets/ca8fdc0f-4b02-4bc9-aaf4-03367a9c12e9" />\
+<img width="1920" height="1030" alt="ID Atanması" src="https://github.com/user-attachments/assets/83676ce3-0271-4879-8cf3-0f4a501857ba" />
 
 >### Çizimin HTML koduna entegre edilmesi
 
